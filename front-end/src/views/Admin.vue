@@ -7,19 +7,17 @@
     </div>
     <div class="add">
       <div class="form">
-        <div>
-          <input v-model="title" placeholder="Title" />
-        </div>
-        <div>
-          <input v-model="description" placeholder="Description" />
-        </div>
-        <p></p>
+        <input v-model="title" placeholder="Title" />
+
         <input type="file" name="photo" @change="fileChanged" />
         <button @click="upload">Upload</button>
+        <br />
+        <br />
+        <h1>Description</h1>
+        <textarea v-model="description" cols="30" rows="10"></textarea>
       </div>
       <div class="upload" v-if="addItem">
-        <h2>{{ addItem.title }}</h2>
-        <h2>{{ addItem.description }}</h2>
+        <h2>{{addItem.title}}</h2>
         <img :src="addItem.path" />
       </div>
     </div>
@@ -37,18 +35,12 @@
             v-for="s in suggestions"
             :key="s.id"
             @click="selectItem(s)"
-          >
-            {{ s.title }}
-          </div>
+          >{{s.title}}</div>
         </div>
       </div>
       <div class="upload" v-if="findItem">
-        <div>
-          <input v-model="findItem.title" />
-        </div>
-        <div>
-          <textarea v-model="findItem.description" />
-        </div>
+        <input v-model="findItem.title" />
+        <textarea v-model="findItem.description" cols="30" rows="10"></textarea>
         <p></p>
         <img :src="findItem.path" />
       </div>
@@ -62,7 +54,6 @@
 
 <script>
 import axios from "axios";
-// is this good practice?
 export default {
   name: "Admin",
   data() {
@@ -76,6 +67,9 @@ export default {
       findItem: null,
     };
   },
+  created() {
+    this.getItems();
+  },
   computed: {
     suggestions() {
       let items = this.items.filter((item) =>
@@ -85,9 +79,14 @@ export default {
     },
   },
   methods: {
-    selectItem(item) {
-      this.findTitle = "";
-      this.findItem = item;
+    async getItems() {
+      try {
+        let response = await axios.get("/api/items");
+        this.items = response.data;
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
     },
     fileChanged(event) {
       this.file = event.target.files[0];
@@ -95,6 +94,23 @@ export default {
     async deleteItem(item) {
       try {
         await axios.delete("/api/items/" + item._id);
+        this.findItem = null;
+        this.getItems();
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    selectItem(item) {
+      this.findTitle = "";
+      this.findItem = item;
+    },
+    async editItem(item) {
+      try {
+        await axios.put("/api/items/" + item._id, {
+          title: this.findItem.title,
+          description: this.findItem.description,
+        });
         this.findItem = null;
         this.getItems();
         return true;
@@ -116,33 +132,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      this.getItems();
     },
-    async editItem(item) {
-      try {
-        await axios.put("/api/items/" + item._id, {
-          title: this.findItem.title,
-          description: this.findItem.description,
-        });
-        this.findItem = null;
-        this.getItems();
-        return true;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async getItems() {
-      try {
-        let response = await axios.get("/api/items");
-        this.items = response.data;
-        return true;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
-  created() {
-    this.getItems();
   },
 };
 </script>
@@ -153,19 +143,23 @@ export default {
   font-style: italic;
   font-size: 1em;
 }
+
 .heading {
   display: flex;
   margin-bottom: 20px;
   margin-top: 20px;
 }
+
 .heading h2 {
   margin-top: 8px;
   margin-left: 10px;
 }
+
 .add,
 .edit {
   display: flex;
 }
+
 .circle {
   border-radius: 50%;
   width: 18px;
@@ -175,6 +169,7 @@ export default {
   color: #fff;
   text-align: center;
 }
+
 /* Form */
 input,
 textarea,
@@ -183,24 +178,30 @@ button {
   font-family: "Montserrat", sans-serif;
   font-size: 1em;
 }
+
 .form {
   margin-right: 50px;
 }
+
 /* Uploaded images */
 .upload h2 {
   margin: 0px;
 }
+
 .upload img {
   max-width: 300px;
 }
+
 /* Suggestions */
 .suggestions {
   width: 200px;
   border: 1px solid #ccc;
 }
+
 .suggestion {
   min-height: 20px;
 }
+
 .suggestion:hover {
   background-color: #5bdeff;
   color: #fff;

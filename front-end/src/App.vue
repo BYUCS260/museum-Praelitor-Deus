@@ -15,9 +15,6 @@
   </div>
   <div class="footer">
     <router-link to="/admin">Admin</router-link>
-    <br>
-    <br>
-    <a href="https://github.com/BYUCS260/museum-weberadam12.git">GitHub</a>
   </div>
 </div>
 </template>
@@ -62,7 +59,6 @@ body {
   padding: 20px 100px 0px 100px;
   background: #e3e3e3;
   font-size: 12px;
-  text-align: center;
 }
 
 .footer a {

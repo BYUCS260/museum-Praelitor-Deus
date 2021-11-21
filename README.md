@@ -6,7 +6,9 @@ show you how to upload photos to a server.
 
 ## Starting the Lab
 
-To start the lab, you **must** follow the GitHub Classroom link in Canvas. If you got here some other way, go back to Canvas. Using the GitHub Classroom link will create a private repository for you using our classroom site. We will only grade repositories created and submitted this way.
+To start the lab, you must follow this [GitHub Classroom link](https://classroom.github.com/a/rwSBWu5-). This will
+create a private repository for you using our classroom site. We will only grade
+repositories created and submitted this way.
 
 Once you "Accept the assignment" on GitHub Classroom, it will create a new
 repository for you and grant you access to it on GitHub. In order to start
@@ -29,9 +31,9 @@ and your admin page should look like this:
 
 Once you complete these introductory tutorials, add the following functionality:
 
-- [Deleting Items](/tutorials/4-deleting-items.md)
-- [Editing Items](/tutorials/5-editing-items.md)
-- [Item Descriptions](/tutorials/6-item-descriptions.md)
+- [Deleting Items](/tutorials/deleting-items.md)
+- [Editing Items](/tutorials/editing-items.md)
+- [Item Descriptions](/tutorials/item-descriptions.md)
 
 ## Link to GitHub repository
 
@@ -45,4 +47,11 @@ DigitalOcean server.
 
 ## Rubric for Grading
 
-Please see Canvas for the rubric.
+When we grade these labs, we will award points using the following rubric:
+
+| Item                                                                                         | Points |
+| -------------------------------------------------------------------------------------------- | ------ |
+| The material in the tutorial works. Add four photos of your own objects to demonstrate this. | 70     |
+| Deleting items works                                                                         | 10     |
+| Editing items works                                                                          | 10     |
+| Item descriptions work for both adding and editing                                           | 10     |
